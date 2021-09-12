@@ -5,7 +5,7 @@ module.exports = {
         port: 3000,
         proxy: {
             '/api': {
-                target: 'https://currency-converter-huf2nok.herokuapp.com/:8080',
+                target: 'https://currency-converter-huf2nok.herokuapp.com/',
                 ws: true,
                 changeOrigin: true
             }
