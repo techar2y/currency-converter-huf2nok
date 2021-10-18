@@ -10,7 +10,7 @@
                     Курс валют
                 </b-nav-item>
                 <b-nav-item to="/about">
-                    About
+                    О программа
                 </b-nav-item>
             </b-navbar-nav>
         </b-navbar>

@@ -14,14 +14,17 @@
                 <b-form-group label="Венгерский форинт" label-for="HUF">
                         <b-input-group size="sm" class="mb-2" append="Ft">
                             <b-form-input
-                                    type="text"
+                                    type="number"
                                     placeholder="0.00"
                                     name="HUF"
                                     id="HUF"
                                     required
                                     v-model="huf"
-                                    @input="validateHUF">
-                                >
+                                    no-wheel
+                                    trim
+                                    number
+                                    @input="validateHUF"
+                                    :formatter="formatter">
                             </b-form-input>
                         </b-input-group>
                 </b-form-group>
@@ -29,7 +32,7 @@
                 <b-form-group label="Российский рубль" label-for="RUB">
                     <b-input-group size="sm" class="mb-2" append="₽">
                         <b-form-input
-                                type="text"
+                                type="number"
                                 placeholder="0.00"
                                 name="RUB"
                                 id="RUB"
@@ -45,7 +48,7 @@
                 <b-form-group label="Норвежский крон" label-for="NOK">
                     <b-input-group size="sm" class="mb-2" append="Kr">
                         <b-form-input
-                                type="text"
+                                type="number"
                                 placeholder="0.00"
                                 name="NOK"
                                 id="NOK"
@@ -107,12 +110,23 @@
                 this.rub = (this.huf * this.baseCurrencyInfo.hufToOneRub).toFixed(4);
                 this.nok = (this.rub / this.baseCurrencyInfo.nokToOneRub).toFixed(4);
             },
+            formatter(value) {
+                if(value.length > 10) {
+                    return value.slice(0, 10);
+                } else if(value.length === 0) {
+                    this.rub = null;
+                    this.nok = null;
+                    this.huf = null;
+                    return value;
+                }
+
+                return value;
+            },
             validateHUF() {
                 try {
+
                     let reg = /^[.0-9]+$/;
                     if (!reg.test(this.huf)) {
-                        this.rub = null;
-                        this.nok = null;
                         throw Error("Не верно введена валюта");
                     }
 
